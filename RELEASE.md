@@ -15,6 +15,10 @@ The CY8CPROTO-064S1-SB library includes the following:
 * API documentation
 
 ### What Changed?
+#### v2.2.0
+* Updated PSoC 64 linker sections to match secure policy settings
+* Simplify BT configuration settings for boards that support it
+* Minor documentation updates
 #### v2.1.0
 * Added component CAT1 to all boards
 * Added new components for connectivity chips

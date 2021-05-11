@@ -44,6 +44,13 @@ def myargs(argv):
                         action='help',
                         help='Print this help message and exit')
 
+    parser.add_argument('--policy-path',
+                        dest='policy_path',
+                        action='store',
+                        type=str,
+                        help="Path to policy file",
+                        required=False)
+
     parser.add_argument('-p', '--policy',
                         dest='policy_file',
                         action='store',
@@ -136,7 +143,10 @@ def main(argv):
     options = myargs(argv)
     print("options: {}".format(options))
 
-    tools = CySecureTools(options.target_name, 'policy/'+ options.policy_file +'.json')
+    if not options.policy_path:
+        options.policy_path = 'policy'
+
+    tools = CySecureTools(options.target_name, options.policy_path + "/" + options.policy_file +'.json')
     if (options.toolchain == 'ARM'):
         fromelf_cmd = options.toolchain_path + "/bin/fromelf"
         app_elf_file = options.build_dir + "/" + options.app_name + ".elf"

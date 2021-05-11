@@ -30,7 +30,7 @@ endif
 include $(dir $(lastword $(MAKEFILE_LIST)))/locate_recipe.mk
 
 # MCU device selection
-#    Changing the device should be done using “make bsp” or “make update_bsp” with the “DEVICE_GEN”
+#    Changing the device should be done using "make bsp" or "make update_bsp" with the "DEVICE_GEN"
 #    variable set to the new MCU. If you change the device manually here you must also update the
 #    design.modus file and re-run the device configurator.
 DEVICE:=CYB06447BZI-D54
