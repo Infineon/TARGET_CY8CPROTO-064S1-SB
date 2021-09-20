@@ -128,7 +128,13 @@ $(document).ready(function(){initNavTree('md_bsp_settings.html','');});
 <tr class="markdownTableBody" class="markdownTableRowOdd">
 <td class="markdownTableBodyCenter">Baud rate  </td><td class="markdownTableBodyCenter">115200  </td><td class="markdownTableBodyLeft">Configurable through HAL function   </td></tr>
 </table>
-<hr/>
+<h1>Security Provisioning Settings</h1>
+<p>This board supports enhanced security features which can be configured as part of development. For details about exactly what is available and how to use it, see the <a href="https://www.cypress.com/documentation/software-and-drivers/psoc-64-secure-mcu-secure-boot-sdk-user-guide">Secure Boot SDK User Guide</a>. Configuring these settings makes use of the <a href="https://pypi.org/project/cysecuretools/">CySecureTools</a> Python package. PSoC64 specific details are available in the <a href="https://github.com/infineon/cysecuretools/docs">README_PSOC64.md</a> file.</p>
+<p>When using CySecureTools to initialize the application, it will generate json files for each possible mode. Some of those modes require information about how to access external memory if it is available. These settings are specific to the external memory attached to your board. For this board, the following settings should be used. Note, a description of what each of the settings means is provided at the end.</p>
+<h2>Getting Started</h2>
+<p>To get started with the no secure policy, the following commands can be run:<br />
+ $ cysecuretools set-ocd &ndash;name openocd &ndash;path &lt;Path to ModusToolbox tools install&gt;/openocd<br />
+ $ cysecuretools -t cyb06xx7 init $ cysecuretools -t cyb06xx7 entrance-exam create-keys provision-device </p><hr/>
 <p> © Cypress Semiconductor Corporation, 2019-2021. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->

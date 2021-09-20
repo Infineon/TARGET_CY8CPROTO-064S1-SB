@@ -15,9 +15,12 @@ The CY8CPROTO-064S1-SB library includes the following:
 * API documentation
 
 ### What Changed?
+#### v2.3.0
+* Add new connectivity components for easier board customization
+* Simplify BT configuration settings for boards that support it
+* Minor branding updates
 #### v2.2.0
 * Updated PSoC 64 linker sections to match secure policy settings
-* Simplify BT configuration settings for boards that support it
 * Minor documentation updates
 #### v2.1.0
 * Added component CAT1 to all boards
@@ -73,10 +76,10 @@ Minimum required ModusToolbox Software Environment: v2.2
 * [CY8CPROTO-064S1-SB BSP API Reference Manual][api]
 * [CY8CPROTO-064S1-SB Documentation](http://www.cypress.com/CY8CPROTO-064S1-SB)
 * [Cypress Semiconductor, an Infineon Technologies Company](http://www.cypress.com)
-* [Cypress Semiconductor GitHub](https://github.com/cypresssemiconductorco)
+* [Infineon GitHub](https://github.com/infineon)
 * [ModusToolbox](https://www.cypress.com/products/modustoolbox-software-environment)
 
-[api]: modules.html
+[api]: https://infineon.github.io/TARGET_CY8CPROTO-064S1-SB/html/modules.html
 
 ---
-© Cypress Semiconductor Corporation, 2019-2021.
+© Cypress Semiconductor Corporation (an Infineon company) or an affiliate of Cypress Semiconductor Corporation, 2019-2021.

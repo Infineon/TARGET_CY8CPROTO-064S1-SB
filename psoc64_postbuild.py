@@ -126,17 +126,15 @@ def myargs(argv):
     return options
 
 def exec_shell_command(cmd):
-    output = []
-    print("Executing command: {}".format(''.join(cmd)))
-    p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE,
+    print("Executing command: {}".format(' '.join(cmd)))
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE,
                               stderr=subprocess.STDOUT)
     for line in iter(p.stdout.readline, b''):
-        output.append(line.decode('utf-8'))
         print("{}".format(line.decode('utf-8')), end='')
     p.stdout.close()
     ret = p.wait()
     print("Command completed (ret={})".format(ret))
-    return ret, ''.join(output)
+    return ret
 
 def main(argv):
 
@@ -154,20 +152,18 @@ def main(argv):
         # Check if gcc tools path is valid
         if (os.path.isdir(options.toolchain_path) == False):
             print("ERROR: 'ARM Compiler' tools folder not found in path: {}".format(options.toolchain_path))
-            exit(0)
+            exit(-1)
 
         # Check if elf is valid
         if (os.path.isfile(app_elf_file) == False):
             print("ERROR: ELF file not found in path: {}\r\n".format(app_elf_file))
-            exit(0)
+            exit(-1)
 
         # Split elf file into sections
-        shell_opt = " " + "--i32 --output=" + fromelf_result_dir + " " + app_elf_file
-        shell_cmd = '"' + fromelf_cmd + '"' + shell_opt
-        print(shell_cmd)
+        shell_cmd = [ fromelf_cmd, '--i32', '--output=' + fromelf_result_dir, app_elf_file ]
         ret = exec_shell_command(shell_cmd)
-        if (ret == 0):
-            exit(0)
+        if (ret != 0):
+            exit(ret)
 
         em_eeprom_hex = fromelf_result_dir + "/" + ".cy_em_eeprom"
         app_hex_path = options.build_dir + '/' + options.app_name + '.hex'
@@ -224,29 +220,24 @@ def main(argv):
         # Check if gcc tools path is valid
         if(os.path.isdir(options.toolchain_path)==False):
             print("ERROR: GCC tools folder not found in path: {}".format(options.toolchain_path))
-            exit(0)
+            exit(-1)
 
         # Check if elf is valid
         if(os.path.isfile(app_elf_file) == False):
             print("ERROR: ELF file not found in path: {}\r\n".format(app_elf_file))
-            exit(0)
+            exit(-1)
 
         # Strip away emulated EEPROM section from hex file before signing
-        shell_opt = " -R .cy_em_eeprom -O ihex " + app_elf_file + " " \
-                + options.build_dir + "/"+ options.app_name +".hex"
-        shell_cmd = gcc_objcopy_eabi_cmd + shell_opt
-        print(shell_cmd)
+        shell_cmd = [ gcc_objcopy_eabi_cmd, '-R', '.cy_em_eeprom', '-O', 'ihex', app_elf_file, options.build_dir + "/" + options.app_name + ".hex" ]
         ret = exec_shell_command(shell_cmd)
-        if(ret == 0):
-            exit(0)
+        if(ret != 0):
+            exit(ret)
 
         # Store emulated eeprom section in a seperate hex file
-        shell_opt = " -j .cy_em_eeprom -O ihex " + options.build_dir + "/" + options.app_name +".elf " \
-                + options.build_dir + "/em_eeprom.hex"
-        shell_cmd = gcc_objcopy_eabi_cmd + shell_opt
+        shell_cmd = [ gcc_objcopy_eabi_cmd, '-j', '.cy_em_eeprom', '-O', 'ihex', options.build_dir + "/" + options.app_name + ".elf", options.build_dir + "/em_eeprom.hex" ]
         ret = exec_shell_command(shell_cmd)
-        if(ret == 0):
-            exit(0)
+        if(ret != 0):
+            exit(ret)
 
         app_hex_path = options.build_dir + '/' + options.app_name + '.hex'
         CM0_app_src_path = options.cm0_app_path + '/' + options.cm0_app_name +  '.hex'
