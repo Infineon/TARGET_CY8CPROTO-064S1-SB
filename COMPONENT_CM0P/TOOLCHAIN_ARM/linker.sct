@@ -101,7 +101,7 @@
 
 ; Public RAM
 #define PUBLIC_RAM_SIZE         0x800
-#define PUBLIC_RAM_START        (RAM_START + RAM_SIZE - STACK_SIZE - PUBLIC_RAM_SIZE)
+#define PUBLIC_RAM_START        0x08000000
 
 ; Cortex-M0+ application flash area
 LR_IROM1 (FLASH_START + BOOT_HEADER_SIZE) (FLASH_SIZE - BOOT_HEADER_SIZE)
@@ -133,6 +133,7 @@ LR_IROM1 (FLASH_START + BOOT_HEADER_SIZE) (FLASH_SIZE - BOOT_HEADER_SIZE)
     RW_IRAM1 +0 UNINIT
     {
         * (.noinit)
+        * (.bss.noinit)
     }
 
     RW_IRAM2 PUBLIC_RAM_START UNINIT
@@ -141,7 +142,7 @@ LR_IROM1 (FLASH_START + BOOT_HEADER_SIZE) (FLASH_SIZE - BOOT_HEADER_SIZE)
     }
 
     ; Application heap area (HEAP)
-    ARM_LIB_HEAP  +0 EMPTY RAM_START+RAM_SIZE-STACK_SIZE-AlignExpr(ImageLimit(RW_IRAM2), 8)
+    ARM_LIB_HEAP  +0 EMPTY RAM_START+RAM_SIZE-STACK_SIZE-AlignExpr(ImageLimit(RW_IRAM1), 8)
     {
     }
 
